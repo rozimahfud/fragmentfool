@@ -33,7 +33,7 @@ def read_pickle_file(file_name):
     with open(file_name,"rb") as file:
         return pickle.load(file)
 
-def prepare_data(dataset_name):
+def prepare_data(path,dataset_name):
     print("\n== Preparing dataset:",dataset_name,"==\n")
 
     if dataset_name == "self-devign":
