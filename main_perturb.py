@@ -71,6 +71,7 @@ def main():
     num_epochs = 100
     start_model_number = 0
     cont = False
+    split_set = ["test","train"]
 
     dataset_raw = "../dataset-preparations/"
     model_path = "data/"+dataset_name+"/"+saved_model_name+"/perturbed/"+model_name+"/"
@@ -96,21 +97,24 @@ def main():
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
         print("\n== Generating graph representation ==\n")
-        for p in tqdm(glob(file_path+"**/*.c",recursive=True)):
-            result = generate_JOERN(p,folder_path,graph_repret)
-            if not result==0:
-                print("Path:",p,"is not success.")  
+        for sp in split_set:
+            for p in tqdm(glob(file_path+sp+"/*.c")):
+                result = generate_JOERN(p,folder_path,graph_repret)
+                if not result==0:
+                    print("Path:",p,"is not success.")  
     else:
         if len(glob(file_path+"**/*.c",recursive=True)) != len(os.listdir(folder_path)):
             print("\n== Continuing generating graph representation ==\n")
-            for p in tqdm(glob(file_path+"**/*.c",recursive=True))::
-                file_name = p.split("/")[-1].split(".")[0]
-                if os.path.exists(folder_path+filename):
-                    continue
-                else:
-                    result = generate_JOERN(p,folder_path,graph_repret)
-                    if not result==0:
-                        print("Path:",p,"is not success.")
+            
+            for sp in split_set:
+                for p in tqdm(glob(file_path+sp+"/*.c")):
+                    file_name = p.split("/")[-1].split(".")[0]
+                    if os.path.exists(folder_path+file_name):
+                        continue
+                    else:
+                        result = generate_JOERN(p,folder_path,graph_repret)
+                        if not result==0:
+                            print("Path:",p,"is not success.")
 
         print("\n== Graph representation has been generated in",folder_path,"==\n")
 
