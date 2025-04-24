@@ -54,7 +54,7 @@ def model_setup(model_name, learning_rate, weight_decay,cont_path=""):
 
 def main():
     # Hyper parameter and setup
-    dataset_name = "devign"
+    dataset_name = "big-vul"
     graph_repret = "cpg"
     model_name = "GatedGraphConv"
     saved_model_name = "model-test"
